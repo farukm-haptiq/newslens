@@ -7,7 +7,7 @@ import OpenAI from 'openai';
 const openai = new OpenAI({
   apiKey: process.env.OPEN_API_KEY,
 });
-const SingleArticle = async ({ params }) => {
+const SingleArticle = async () => {
   // NEWS API
   const newsUrl = `https://newsapi.org/v2/everything?q=india+pune&apiKey=${process.env.NEWS_API_KEY}`;
 
