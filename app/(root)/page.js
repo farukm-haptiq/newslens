@@ -42,6 +42,12 @@ const HomePage = async ({ searchParams }) => {
       <ComboboxSource newsSources={newsSources} source={sources} />
       <SelectSort sortBy={sortBy} />
 
+      {articles.length <= 0 && (
+        <h1 className='text-5xl text-slate-800 text-center'>
+          Oops! no result match your query.
+        </h1>
+      )}
+
       <div className=' grid gap-5 md:grid-cols-2 lg:grid-cols-4'>
         {articles.map((article, index) => {
           return (
