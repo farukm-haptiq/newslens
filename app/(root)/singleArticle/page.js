@@ -3,6 +3,7 @@ import { JSDOM } from 'jsdom';
 import { Readability } from '@mozilla/readability';
 
 import OpenAI from 'openai';
+import BackBtn from '@/components/BackBtn';
 
 const openai = new OpenAI({
   apiKey: process.env.OPEN_API_KEY,
@@ -27,7 +28,11 @@ const SingleArticle = async () => {
   // After calling Readability.parse(), you can access the textContent or title properties, which already contain clean content, meaning you don't need extra cleaning from cheerio or jsdom unless you're doing additional DOM manipulations.
 
   if (!article) {
-    return <h2>Fail to fetch single article</h2>;
+    return (
+      <h1 className='text-5xl text-slate-800 text-center'>
+        ail to fetch single article{' '}
+      </h1>
+    );
   }
 
   const cleanText = article.textContent.trim();
@@ -47,7 +52,8 @@ const SingleArticle = async () => {
   });
 
   return (
-    <div className='space-y-4'>
+    <div className='p-5 space-y-4 text-justify'>
+      <BackBtn />
       <p>{cleanText}</p>
 
       <h4>Summary</h4>
