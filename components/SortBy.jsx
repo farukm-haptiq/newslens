@@ -22,7 +22,7 @@ const SelectSort = ({ sortBy }) => {
     setSortChange(value);
 
     const existingQuery = qs.parse(window.location.search);
-    const query = { ...existingQuery, sortBy: value };
+    const query = { ...existingQuery, sortBy: value, page: 1 };
 
     const url = qs.stringifyUrl(
       {
@@ -38,7 +38,10 @@ const SelectSort = ({ sortBy }) => {
   return (
     <Select value={sortChange} onValueChange={handleSortChange}>
       <SelectTrigger
-        className={cn('w-[180px] ', !sortChange && 'text-muted-foreground')}
+        className={cn(
+          'w-[180px] hover:bg-gray-100 transition-all',
+          !sortChange && 'text-muted-foreground'
+        )}
       >
         <SelectValue placeholder='Select a sort option' />
       </SelectTrigger>

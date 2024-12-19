@@ -15,7 +15,7 @@ const SearchInput = ({ searchText }) => {
     e.preventDefault();
 
     const existingQuery = qs.parse(window.location.search);
-    const query = { ...existingQuery, search };
+    const query = { ...existingQuery, search, page: 1 };
 
     const url = qs.stringifyUrl(
       {
@@ -38,7 +38,7 @@ const SearchInput = ({ searchText }) => {
     <form onSubmit={handleSubmit}>
       <div className='flex w-full max-w-sm items-center space-x-2'>
         <Input
-          type='text'
+          type='search'
           name='search'
           value={search}
           onChange={(e) => setSearch(e.target.value)}
