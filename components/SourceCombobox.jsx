@@ -44,7 +44,7 @@ const ComboboxSource = ({ newsSources, source }) => {
 
   function onChangeSourceHandler(source) {
     const existingQuery = qs.parse(window.location.search);
-    const query = { ...existingQuery, sources: source };
+    const query = { ...existingQuery, sources: source, page: 1 };
 
     const url = qs.stringifyUrl(
       {
