@@ -1,4 +1,3 @@
-import axios from 'axios';
 import qs from 'query-string';
 
 import ArticlesWrapper from '@/components/ArticlesWrapper';
@@ -22,7 +21,7 @@ const HomePage = async ({ searchParams }) => {
 
   const response = await getArticles(queryParams);
 
-  if (!response.data.articles) {
+  if (!response?.data.articles) {
     return (
       <h1 className='text-7xl text-slate-800'>
         fail to get articles! try after some time
