@@ -3,11 +3,11 @@ import styled from 'styled-components';
 
 const LoadingScreen = () => {
   return (
-    <Wrapper className='grid place-items-center h-screen p-20'>
+    <Wrapper className='grid place-items-center h-[calc(100vh-64px)] p-20'>
       <div className='size-[150px] relative'>
-        <span />
-        <span />
-        <span />
+        <span className='bg-primary' />
+        <span className='bg-primary' />
+        <span className='bg-primary' />
       </div>
     </Wrapper>
   );
@@ -19,7 +19,6 @@ const Wrapper = styled.div`
     width: 50px;
     height: 50px;
     border-radius: 4px;
-    background: black;
     animation: chase 2s infinite;
   }
 

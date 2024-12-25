@@ -39,7 +39,7 @@ const SelectSort = ({ sortBy }) => {
     <Select value={sortChange} onValueChange={handleSortChange}>
       <SelectTrigger
         className={cn(
-          'w-[180px] hover:bg-gray-100 transition-all',
+          'w-[180px] capitalize focus:ring-0 ring-offset-0 focus:ring-offset-0 outline-none  hover:bg-accent ',
           !sortChange && 'text-muted-foreground'
         )}
       >
@@ -48,9 +48,9 @@ const SelectSort = ({ sortBy }) => {
       <SelectContent>
         <SelectGroup>
           <SelectLabel>SortBy</SelectLabel>
-          <SelectItem value='relevancy'>relevancy</SelectItem>
-          <SelectItem value='popularity'>popularity</SelectItem>
-          <SelectItem value='publishedAt'>publishedAt</SelectItem>
+          <SelectItem value='relevancy'>Relevancy</SelectItem>
+          <SelectItem value='popularity'>Popularity</SelectItem>
+          <SelectItem value='publishedAt'>PublishedAt</SelectItem>
         </SelectGroup>
       </SelectContent>
     </Select>

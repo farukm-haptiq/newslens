@@ -12,8 +12,7 @@ import SearchInput from './SearchInput';
 import SelectSort from './SortBy';
 import ComboboxSource from './SourceCombobox';
 import PaginationWrapper from './PaginationWrapper';
-
-import Img from '@/app/assets/images/default-img.jpg';
+import { ArticleCard } from './ArticleCard';
 
 const ARTICLES_PER_PAGE = 12; // Number of articles per page
 
@@ -50,8 +49,10 @@ const ArticleWrapper = ({
   }, [articles, currentPage, searchParams, router]);
 
   return (
-    <div className='p-10 space-y-5'>
-      <h1 className='text-7xl font-extrabold'>Newslens</h1>
+    <div className='bg-background p-10 space-y-5'>
+      <h1 className='text-7xl font-extrabold'>
+        <span className='gradient-text'>Newslens</span>
+      </h1>
       <p>– A sharper perspective on the news.</p>
       <SearchInput searchText={searchQuery} />
       <ComboboxSource newsSources={newsSources} source={sources} />
@@ -63,51 +64,20 @@ const ArticleWrapper = ({
         </h1>
       )}
 
-      <div className='grid gap-5 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'>
-        {currentArticles.map((article, index) => (
-          <div
-            key={index}
-            className='bg-gray-200 px-4 space-y-2 py-2 rounded-md shadow-md  transition hover:shadow-lg'
-          >
-            <div className='relative w-full h-64'>
-              <Image
-                fill
-                src={article.urlToImage || Img}
-                alt='Article Img'
-                sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
-                priority={false}
-                className='rounded-xl object-cover'
-              />
-            </div>
-            <h5 className='text-xl text-slate-900'>
-              published by:{' '}
-              <span className='font-bold text-red-500'>{article.author}</span>
-            </h5>
-            <h6 className='text-slate-700'>source: {article.source?.name}</h6>
-            <p>{article.description}</p>
-
-            <Button asChild>
-              <Link
-                href={{
-                  pathname: '/singleArticle',
-                  query: { url: encodeURIComponent(article.url) },
-                }}
-              >
-                Get Summary
-              </Link>
-            </Button>
-          </div>
-        ))}
+      <div className='grid gap-5 md:grid-cols-2 lg:grid-cols-3 '>
+        {currentArticles.map((article, index) => {
+          return <ArticleCard key={index} article={article} />;
+        })}
       </div>
 
       {/* Pagination Controls */}
-      {totalPages > 1 && currentPage <= totalPages && (
-        <PaginationWrapper
-          articles={articles}
-          currentPage={currentPage}
-          totalPages={totalPages}
-        />
-      )}
+      {/* {totalPages > 1 && currentPage <= totalPages && ( */}
+      <PaginationWrapper
+        articles={articles}
+        currentPage={currentPage}
+        totalPages={totalPages}
+      />
+      {/* )} */}
     </div>
   );
 };

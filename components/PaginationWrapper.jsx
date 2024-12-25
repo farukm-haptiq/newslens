@@ -1,6 +1,8 @@
 import { cn } from '@/lib/utils';
 import { useRouter } from 'next/navigation';
 import qs from 'query-string';
+import { Button } from '@/components/ui/button';
+import { ChevronLeft, ChevronRight, MoreHorizontal } from 'lucide-react';
 
 const PaginationWrapper = ({ currentPage, totalPages }) => {
   const router = useRouter();
@@ -20,93 +22,93 @@ const PaginationWrapper = ({ currentPage, totalPages }) => {
     router.push(url);
   };
 
-  const addPageButton = (page) => {
-    return (
-      <button
-        key={page}
-        className={cn(
-          'px-4 py-2 rounded-md',
-          currentPage === page ? 'bg-blue-600 text-white' : 'bg-gray-300'
-        )}
-        onClick={() => handlePageChange(page)}
-      >
-        {page}
-      </button>
-    );
-  };
+  const PageButton = ({ page }) => (
+    <Button
+      variant={currentPage === page ? 'default' : 'outline'}
+      size='icon'
+      onClick={() => handlePageChange(page)}
+      className={cn(
+        'w-10 h-10 transition-all duration-200',
+        currentPage === page &&
+          'bg-primary text-primary-foreground hover:bg-primary/90'
+      )}
+    >
+      {page}
+    </Button>
+  );
+
+  const Ellipsis = () => (
+    <Button variant='ghost' size='icon' className='w-10 h-10 cursor-default'>
+      <MoreHorizontal className='w-4 h-4' />
+    </Button>
+  );
 
   const renderPageButtons = () => {
     const pageButtons = [];
 
-    // Add the first page button
-    pageButtons.push(addPageButton(1));
-    // Add the dots before the current page if there are more than 3 pages
+    pageButtons.push(<PageButton key={1} page={1} />);
+
     if (currentPage > 3) {
-      pageButtons.push(
-        <span className='page-btn dots' key='dots-1'>
-          ....
-        </span>
-      );
+      pageButtons.push(<Ellipsis key='ellipsis-1' />);
     }
-    // one before current page
+
     if (currentPage > 2) {
-      pageButtons.push(addPageButton(currentPage - 1));
-    }
-
-    // Add the current page button
-    if (currentPage !== 1 && currentPage !== totalPages) {
-      pageButtons.push(addPageButton(currentPage));
-    }
-
-    // one after current page
-    if (currentPage !== totalPages && currentPage !== totalPages - 1) {
-      pageButtons.push(addPageButton(currentPage + 1));
-    }
-    if (currentPage < totalPages - 2) {
       pageButtons.push(
-        <span className=' page-btn dots' key='dots+1'>
-          ....
-        </span>
+        <PageButton key={currentPage - 1} page={currentPage - 1} />
       );
     }
 
-    // Add the last page button
-    pageButtons.push(addPageButton(totalPages));
+    if (currentPage !== 1 && currentPage !== totalPages) {
+      pageButtons.push(<PageButton key={currentPage} page={currentPage} />);
+    }
+
+    if (currentPage < totalPages - 1) {
+      pageButtons.push(
+        <PageButton key={currentPage + 1} page={currentPage + 1} />
+      );
+    }
+
+    if (currentPage < totalPages - 2) {
+      pageButtons.push(<Ellipsis key='ellipsis-2' />);
+    }
+
+    if (totalPages > 1) {
+      pageButtons.push(<PageButton key={totalPages} page={totalPages} />);
+    }
 
     return pageButtons;
   };
 
+  if (totalPages <= 1) return null;
+
   return (
-    <div className=''>
-      {totalPages > 1 && currentPage <= totalPages && (
-        <div className='flex justify-center space-x-3'>
-          <button
-            disabled={currentPage === 1}
-            onClick={() => handlePageChange(currentPage - 1)}
-            className={`px-4 py-2 rounded-md ${
-              currentPage === 1
-                ? 'bg-gray-300 cursor-not-allowed'
-                : 'bg-blue-500 text-white'
-            }`}
-          >
-            Previous
-          </button>
+    <div
+      className='flex justify-center items-center space-x-2 mt-8'
+      aria-label='Pagination'
+    >
+      <Button
+        variant='outline'
+        size='icon'
+        onClick={() => handlePageChange(currentPage - 1)}
+        disabled={currentPage === 1}
+        className='w-10 h-10'
+      >
+        <span className='sr-only'>Previous page</span>
+        <ChevronLeft className='w-4 h-4' />
+      </Button>
 
-          {renderPageButtons()}
+      {renderPageButtons()}
 
-          <button
-            disabled={currentPage === totalPages}
-            onClick={() => handlePageChange(currentPage + 1)}
-            className={`px-4 py-2 rounded-md ${
-              currentPage === totalPages
-                ? 'bg-gray-300 cursor-not-allowed'
-                : 'bg-blue-500 text-white'
-            }`}
-          >
-            Next
-          </button>
-        </div>
-      )}
+      <Button
+        variant='outline'
+        size='icon'
+        onClick={() => handlePageChange(currentPage + 1)}
+        disabled={currentPage === totalPages}
+        className='w-10 h-10'
+      >
+        <span className='sr-only'>Next page</span>
+        <ChevronRight className='w-4 h-4' />
+      </Button>
     </div>
   );
 };
