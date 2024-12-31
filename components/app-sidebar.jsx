@@ -14,6 +14,12 @@ import {
   Settings2,
   SquareTerminal,
   Newspaper,
+  FileScanIcon,
+  Link as LinkIcon,
+  NewspaperIcon,
+  ListPlus,
+  FilePlus2,
+  Search,
 } from 'lucide-react';
 
 import { NavMain } from '@/components/nav-main';
@@ -26,7 +32,13 @@ import {
   SidebarFooter,
   SidebarHeader,
   SidebarRail,
+  useSidebar,
 } from '@/components/ui/sidebar';
+import Image from 'next/image';
+
+import logo from '@/app/assets/images/logo.png';
+import logo2 from '@/app/assets/images/logo2.png';
+import Link from 'next/link';
 
 // This is sample data.
 const data = {
@@ -58,14 +70,33 @@ const data = {
       url: '/',
       icon: Dock,
       isActive: true,
-      items: [],
+      color: 'text-sky-500',
     },
     {
-      title: 'All News',
-      url: '/all-news',
-      icon: Newspaper,
-      // items: [],
+      title: 'Explore News',
+      url: '/explore-news',
+      icon: FilePlus2,
+      color: 'text-violet-500',
     },
+    {
+      title: 'Smart Search',
+      url: '/smart-search',
+      icon: Search,
+      color: 'text-pink-500',
+    },
+    {
+      title: 'Scan Print Media',
+      url: '/scan',
+      icon: FileScanIcon,
+      color: 'text-orange-700',
+    },
+    {
+      title: 'Analyze URL',
+      url: '/url-analysis',
+      icon: LinkIcon,
+      color: 'text-emerald-500',
+    },
+
     // {
     //   title: 'Documentation',
     //   url: '#',
@@ -186,13 +217,31 @@ const data = {
 };
 
 export function AppSidebar({ ...props }) {
+  const { state } = useSidebar();
+  const isOpen = state === 'expanded';
   return (
     <Sidebar collapsible='icon' {...props}>
       <SidebarHeader>
         {/* <TeamSwitcher teams={data.teams} /> */}
-        <h5 className='gradient-text text-3xl font-extrabold my-4 px-2'>
-          NewsLens
-        </h5>
+        {isOpen ? (
+          <Link href='/' className='flex justify-center items-center my-5'>
+            <div className='relative size-12 rounded-md overflow-hidden'>
+              <Image
+                fill
+                src={logo2}
+                alt='logo-img'
+                className=' object-cover'
+              />
+            </div>
+            <h5 className='gradient-text text-3xl font-extrabold my-4 px-2'>
+              NewsLens
+            </h5>
+          </Link>
+        ) : (
+          <div className='relative w-8 h-8 rounded-md overflow-hidden'>
+            <Image fill src={logo} alt='logo-img' className=' object-cover' />
+          </div>
+        )}
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />

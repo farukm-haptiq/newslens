@@ -1,8 +1,10 @@
-import { cn } from '@/lib/utils';
 import { useRouter } from 'next/navigation';
+
 import qs from 'query-string';
-import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 import { ChevronLeft, ChevronRight, MoreHorizontal } from 'lucide-react';
+
+import { Button } from '@/components/ui/button';
 
 const PaginationWrapper = ({ currentPage, totalPages }) => {
   const router = useRouter();
@@ -82,33 +84,35 @@ const PaginationWrapper = ({ currentPage, totalPages }) => {
   if (totalPages <= 1) return null;
 
   return (
-    <div
-      className='flex justify-center items-center space-x-2 mt-8'
-      aria-label='Pagination'
-    >
-      <Button
-        variant='outline'
-        size='icon'
-        onClick={() => handlePageChange(currentPage - 1)}
-        disabled={currentPage === 1}
-        className='w-10 h-10'
+    <div>
+      <div
+        className='my-10 flex justify-center items-center space-x-2 mt-8'
+        aria-label='Pagination'
       >
-        <span className='sr-only'>Previous page</span>
-        <ChevronLeft className='w-4 h-4' />
-      </Button>
+        <Button
+          variant='outline'
+          size='icon'
+          onClick={() => handlePageChange(currentPage - 1)}
+          disabled={currentPage === 1}
+          className='w-10 h-10'
+        >
+          <span className='sr-only'>Previous page</span>
+          <ChevronLeft className='w-4 h-4' />
+        </Button>
 
-      {renderPageButtons()}
+        {renderPageButtons()}
 
-      <Button
-        variant='outline'
-        size='icon'
-        onClick={() => handlePageChange(currentPage + 1)}
-        disabled={currentPage === totalPages}
-        className='w-10 h-10'
-      >
-        <span className='sr-only'>Next page</span>
-        <ChevronRight className='w-4 h-4' />
-      </Button>
+        <Button
+          variant='outline'
+          size='icon'
+          onClick={() => handlePageChange(currentPage + 1)}
+          disabled={currentPage === totalPages}
+          className='w-10 h-10'
+        >
+          <span className='sr-only'>Next page</span>
+          <ChevronRight className='w-4 h-4' />
+        </Button>
+      </div>
     </div>
   );
 };

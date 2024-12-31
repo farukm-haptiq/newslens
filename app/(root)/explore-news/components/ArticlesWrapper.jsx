@@ -2,17 +2,11 @@
 
 import qs from 'query-string';
 import { useEffect } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
 import { useRouter, useSearchParams } from 'next/navigation';
 
-import { Button } from './ui/button';
-
-import SearchInput from './SearchInput';
-import SelectSort from './SortBy';
-import ComboboxSource from './SourceCombobox';
-import PaginationWrapper from './PaginationWrapper';
+import ExploreNewsForm from './ExploreNewsForm';
 import { ArticleCard } from './ArticleCard';
+import PaginationWrapper from './PaginationWrapper';
 
 const ARTICLES_PER_PAGE = 12; // Number of articles per page
 
@@ -20,7 +14,7 @@ const ArticleWrapper = ({
   articles,
   newsSources,
   searchQuery,
-  sources,
+  source,
   sortBy,
 }) => {
   const router = useRouter();
@@ -46,17 +40,16 @@ const ArticleWrapper = ({
 
       router.push(url);
     }
-  }, [articles, currentPage, searchParams, router]);
+  }, [currentPage, totalPages]);
 
   return (
-    <div className='bg-background p-10 space-y-5'>
-      <h1 className='text-7xl font-extrabold'>
-        <span className='gradient-text'>Newslens</span>
-      </h1>
-      <p>– A sharper perspective on the news.</p>
-      <SearchInput searchText={searchQuery} />
-      <ComboboxSource newsSources={newsSources} source={sources} />
-      <SelectSort sortBy={sortBy} />
+    <>
+      <ExploreNewsForm
+        initialSearch={searchQuery}
+        initialSource={source}
+        initialSortBy={sortBy}
+        newsSources={newsSources}
+      />
 
       {articles.length <= 0 && (
         <h1 className='text-5xl text-slate-800 text-center'>
@@ -71,14 +64,14 @@ const ArticleWrapper = ({
       </div>
 
       {/* Pagination Controls */}
-      {/* {totalPages > 1 && currentPage <= totalPages && ( */}
-      <PaginationWrapper
-        articles={articles}
-        currentPage={currentPage}
-        totalPages={totalPages}
-      />
-      {/* )} */}
-    </div>
+      {totalPages > 1 && currentPage <= totalPages && (
+        <PaginationWrapper
+          articles={articles}
+          currentPage={currentPage}
+          totalPages={totalPages}
+        />
+      )}
+    </>
   );
 };
 
