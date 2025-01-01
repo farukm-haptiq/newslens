@@ -5,9 +5,9 @@ import UrlAnalysisWrapper from './components/UrlAnalysisWrapper';
 
 const UrlAnalysisPage = () => {
   return (
-    <div className='bg-background px-10 space-y-5'>
+    <div className='space-y-10'>
       <Heading
-        title='Search News'
+        title='Analyze URL'
         description='Summarize multiple links in one go.'
         icon={Link}
         iconColor='text-emerald-500'

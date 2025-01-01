@@ -32,7 +32,7 @@ const HomePage = async ({ searchParams }) => {
   const articles = response.data.articles;
 
   return (
-    <div className='min-h-screen bg-background px-10 space-y-5'>
+    <div className='space-y-5'>
       <Heading
         title='Explore news'
         description='Discover and summarize articles with a click.'

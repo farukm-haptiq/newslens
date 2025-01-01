@@ -46,7 +46,7 @@ export function NavMain({ items }) {
                   >
                     <Link
                       href={item.url}
-                      className='p-3 text-zinc-400 font-medium tracking-wide'
+                      className='text-sm px-3 py-5 text-zinc-400 font-medium tracking-wide'
                     >
                       {item.icon && (
                         <item.icon className={cn('h5 w-5 mr-2', item.color)} />

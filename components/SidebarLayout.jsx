@@ -6,10 +6,12 @@ const SidebarLayout = ({ children }) => {
   return (
     <SidebarProvider>
       <AppSidebar />
-      <div className='flex-grow w-full space-y-10'>
+      <div className='flex-grow w-full'>
         <SidebarHeader />
 
-        <main>{children}</main>
+        <main className='container mx-auto bg-background px-10 pb-10'>
+          {children}
+        </main>
       </div>
     </SidebarProvider>
   );

@@ -10,6 +10,7 @@ import {
   getNewsSearchArticlesSummary,
   getNewsSearchArticlesContent,
 } from '@/lib/actions';
+import Loader from '@/components/Loader';
 
 const UrlAnalysisWrapper = () => {
   const [summary, setSummary] = useState(null);
@@ -52,13 +53,9 @@ const UrlAnalysisWrapper = () => {
         handleSubmit={handleSubmit}
       />
 
-      {isLoading ? (
-        <h3 className='text-2xl'>Loading...</h3>
-      ) : summary ? (
-        <NewsSearchSummary {...summary} />
-      ) : (
-        <h3 className='text-2xl'>Fail to get summary...</h3>
-      )}
+      {isLoading && <Loader />}
+
+      {summary && <NewsSearchSummary {...summary} />}
     </>
   );
 };

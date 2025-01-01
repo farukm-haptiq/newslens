@@ -11,7 +11,7 @@ const Heading = ({ title, description, icon: Icon, iconColor, bgColor }) => {
 
       <div>
         <h2 className='text-3xl font-bold tracking-wider'>
-          <TextShimmer>{title}</TextShimmer>
+          <TextShimmer className={'text-primary/50'}>{title}</TextShimmer>
         </h2>
         <p className='text-sm text-muted-foreground tracking-wide'>
           {description}

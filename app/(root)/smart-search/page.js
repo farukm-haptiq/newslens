@@ -32,9 +32,9 @@ const NewsSearchPage = async ({ searchParams }) => {
   const { articles, nextPage } = await getNewsSearchArticles({ queryParams });
 
   return (
-    <div className='bg-background px-10 space-y-5'>
+    <div className='space-y-10'>
       <Heading
-        title='Search News'
+        title='Smart Search'
         description='Search, summarize, and scroll endlessly.'
         icon={Search}
         iconColor='text-pink-700'

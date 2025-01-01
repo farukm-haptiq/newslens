@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import qs from 'query-string';
 import { getNewsSearchArticles } from '@/lib/actions';
 import SingleRelatedCard from './SingleRelatedCard';
-import Loader from './Loader';
+import Loader from '@/components/Loader';
 
 const RelatedArticles = ({ searchQuery, nextPage: initialNextPage }) => {
   const [articles, setArticles] = useState([]);
