@@ -136,7 +136,7 @@ const SingleNewsSearchArticleCard = ({ article }) => {
             {article.source_url && (
               <Button asChild variant='outline' className='px-4'>
                 <a
-                  href={article.source_url}
+                  href={article.link}
                   target='_blank'
                   rel='noopener noreferrer'
                   aria-label='Read full article'

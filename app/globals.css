@@ -941,7 +941,7 @@ body {
 /* ******* */
 /* COLOR NINE */
 /* ******* */
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+/*@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -1080,7 +1080,7 @@ body {
       )
       1;
   }
-}
+}*/
 
 /* ****** */
 /* COLOR TEN */
@@ -1178,3 +1178,291 @@ body {
   }
 }
 */
+
+/* ****** */
+/* COLOR TEN */
+/* ****** */
+/*@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+@layer base {
+  :root {
+    --background: 230 50% 98%;
+    --foreground: 230 50% 10%;
+    --card: 0 0% 100%;
+    --card-foreground: 230 50% 10%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 230 50% 10%;
+    --primary: 250 100% 60%;
+    --primary-light: 250 100% 70%;
+    --primary-dark: 250 100% 50%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 190 100% 50%;
+    --secondary-light: 190 100% 60%;
+    --secondary-dark: 190 100% 40%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 230 30% 94%;
+    --muted-foreground: 230 50% 40%;
+    --accent: 160 100% 45%;
+    --accent-light: 160 100% 55%;
+    --accent-dark: 160 100% 35%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 100% 50%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 230 30% 90%;
+    --input: 230 30% 90%;
+    --ring: 250 100% 60%;
+    --radius: 0.5rem;
+    --chart-1: 250 100% 60%;
+    --chart-2: 190 100% 50%;
+    --chart-3: 160 100% 45%;
+    --chart-4: 220 100% 65%;
+    --chart-5: 280 70% 60%;
+    --sidebar-background: 230 50% 10%;
+    --sidebar-foreground: 230 30% 98%;
+    --sidebar-muted: 230 30% 60%;
+    --sidebar-primary: 250 100% 60%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 160 100% 45%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 230 30% 20%;
+    --sidebar-ring: 250 100% 60%;
+  }
+
+  .dark {
+    --background: 230 50% 5%;
+    --foreground: 230 30% 98%;
+    --card: 230 50% 8%;
+    --card-foreground: 230 30% 98%;
+    --popover: 230 50% 8%;
+    --popover-foreground: 230 30% 98%;
+    --primary: 250 100% 60%;
+    --primary-light: 250 100% 70%;
+    --primary-dark: 250 100% 50%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 190 100% 50%;
+    --secondary-light: 190 100% 60%;
+    --secondary-dark: 190 100% 40%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 230 50% 15%;
+    --muted-foreground: 230 30% 80%;
+    --accent: 160 100% 45%;
+    --accent-light: 160 100% 55%;
+    --accent-dark: 160 100% 35%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 100% 50%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 230 50% 20%;
+    --input: 230 50% 20%;
+    --ring: 250 100% 60%;
+    --chart-1: 250 100% 60%;
+    --chart-2: 190 100% 50%;
+    --chart-3: 160 100% 45%;
+    --chart-4: 220 100% 65%;
+    --chart-5: 280 70% 60%;
+    --sidebar-background: 230 50% 5%;
+    --sidebar-foreground: 230 30% 98%;
+    --sidebar-muted: 230 30% 80%;
+    --sidebar-primary: 250 100% 60%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 160 100% 45%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 230 50% 20%;
+    --sidebar-ring: 250 100% 60%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  .gradient-text {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary via-secondary to-accent;
+  }
+
+  .neon-glow {
+    @apply relative;
+  }
+
+  .neon-glow::before {
+    @apply content-[''] absolute inset-0 bg-gradient-to-r from-primary-light via-secondary-light to-accent-light opacity-75 blur-lg -z-10;
+  }
+
+  .hover-lift {
+    @apply transition-all duration-300 ease-in-out hover:-translate-y-1 hover:shadow-lg;
+  }
+
+  .glass-effect {
+    @apply bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg;
+  }
+
+  .text-shadow {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .border-gradient {
+    border-image: linear-gradient(
+        to right,
+        theme('colors.primary.DEFAULT'),
+        theme('colors.secondary.DEFAULT')
+      )
+      1;
+  }
+}*/
+
+/* ******* */
+/* ELEVEN COLOR */
+/* ******* */
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+@layer base {
+  :root {
+    --background: 180 20% 99%;
+    --foreground: 180 25% 10%;
+    --card: 0 0% 100%;
+    --card-foreground: 180 25% 10%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 180 25% 10%;
+    --primary: 170 100% 45%;
+    --primary-light: 170 100% 55%;
+    --primary-dark: 170 100% 35%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 280 85% 65%;
+    --secondary-light: 280 85% 75%;
+    --secondary-dark: 280 85% 55%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 180 20% 96%;
+    --muted-foreground: 180 25% 40%;
+    --accent: 35 100% 65%;
+    --accent-light: 35 100% 75%;
+    --accent-dark: 35 100% 55%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 85% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 180 20% 90%;
+    --input: 180 20% 90%;
+    --ring: 170 100% 45%;
+    --radius: 0.5rem;
+    --chart-1: 170 100% 45%;
+    --chart-2: 280 85% 65%;
+    --chart-3: 35 100% 65%;
+    --chart-4: 210 100% 65%;
+    --chart-5: 320 80% 65%;
+    --sidebar-background: 180 25% 10%;
+    --sidebar-foreground: 180 20% 99%;
+    --sidebar-muted: 180 20% 60%;
+    --sidebar-primary: 170 100% 45%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 35 100% 65%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 180 25% 20%;
+    --sidebar-ring: 170 100% 45%;
+  }
+
+  .dark {
+    --background: 180 25% 5%;
+    --foreground: 180 20% 99%;
+    --card: 180 25% 8%;
+    --card-foreground: 180 20% 99%;
+    --popover: 180 25% 8%;
+    --popover-foreground: 180 20% 99%;
+    --primary: 170 100% 45%;
+    --primary-light: 170 100% 55%;
+    --primary-dark: 170 100% 35%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 280 85% 65%;
+    --secondary-light: 280 85% 75%;
+    --secondary-dark: 280 85% 55%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 180 25% 15%;
+    --muted-foreground: 180 20% 80%;
+    --accent: 35 100% 65%;
+    --accent-light: 35 100% 75%;
+    --accent-dark: 35 100% 55%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 85% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 180 25% 20%;
+    --input: 180 25% 20%;
+    --ring: 170 100% 45%;
+    --chart-1: 170 100% 45%;
+    --chart-2: 280 85% 65%;
+    --chart-3: 35 100% 65%;
+    --chart-4: 210 100% 65%;
+    --chart-5: 320 80% 65%;
+    --sidebar-background: 180 25% 5%;
+    --sidebar-foreground: 180 20% 99%;
+    --sidebar-muted: 180 20% 80%;
+    --sidebar-primary: 170 100% 45%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 35 100% 65%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 180 25% 20%;
+    --sidebar-ring: 170 100% 45%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  .gradient-text {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary via-secondary to-accent;
+  }
+
+  .neon-glow {
+    @apply relative;
+  }
+
+  .neon-glow::before {
+    @apply content-[''] absolute inset-0 bg-gradient-to-r from-primary-light via-secondary-light to-accent-light opacity-75 blur-lg -z-10;
+  }
+
+  .hover-lift {
+    @apply transition-all duration-300 ease-in-out hover:-translate-y-1 hover:shadow-lg;
+  }
+
+  .glass-effect {
+    @apply bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg;
+  }
+
+  .text-shadow {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .border-gradient {
+    border-image: linear-gradient(
+        to right,
+        theme('colors.primary.DEFAULT'),
+        theme('colors.secondary.DEFAULT')
+      )
+      1;
+  }
+}

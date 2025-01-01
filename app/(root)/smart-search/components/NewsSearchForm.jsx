@@ -6,7 +6,14 @@ import qs from 'query-string';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { Check, ChevronsUpDown } from 'lucide-react';
+import {
+  Check,
+  ChevronsUpDown,
+  Search,
+  Globe,
+  Newspaper,
+  List,
+} from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -31,18 +38,21 @@ import {
   CommandItem,
   CommandList,
 } from '@/components/ui/command';
+import { motion } from 'framer-motion';
 
 import { countries, categories } from '@/lib/utils';
+import { Card, CardContent } from '@/components/ui/card';
+import Loader from '@/components/Loader';
 
 const FormSchema = z.object({
   search: z
     .string()
-    .min(10, { message: 'Search term must be at least 10 characters long.' }), // Custom error message for min length
+    .min(10, { message: 'Search term must be at least 10 characters long.' }),
   source: z.string({
     required_error: 'Please select a source.',
   }),
-  country: z.string().nonempty({ message: 'Please select a country.' }), // Ensuring country is not empty
-  category: z.string().nonempty({ message: 'Please select a category.' }), // Ensuring country is not empty
+  country: z.string().nonempty({ message: 'Please select a country.' }),
+  category: z.string().nonempty({ message: 'Please select a category.' }),
 });
 
 const NewsSearchForm = ({
@@ -86,294 +96,261 @@ const NewsSearchForm = ({
   }
 
   if (!isMounted) {
-    return <div>Loading...</div>;
+    return <Loader />;
   }
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-6'>
-        <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-5'>
-          <FormField
-            control={form.control}
-            name='search'
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Search</FormLabel>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className='bg-card p-6 rounded-lg shadow-lg space-y-6'
+    >
+      <h2 className='text-3xl font-bold mb-6 text-center gradient-text'>
+        Smart Search
+      </h2>
 
-                <FormControl>
-                  <Input type='search' placeholder='Search...' {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+      <Card>
+        <CardContent className='p-6'>
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-6'>
+              <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-6'>
+                <FormField
+                  control={form.control}
+                  name='search'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className='flex items-center text-sm font-medium'>
+                        <Search className='w-4 h-4 mr-2' />
+                        Search
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          type='search'
+                          placeholder='Enter your search term...'
+                          {...field}
+                          className='bg-background transition-all duration-300 focus:ring-2 focus:ring-primary'
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-          <FormField
-            control={form.control}
-            name='source'
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Source</FormLabel>
-
-                <Popover
-                  open={sourcePopoverOpen}
-                  onOpenChange={setSourcePopoverOpen}
-                >
-                  <PopoverTrigger asChild>
-                    <FormControl>
-                      <Button
-                        variant='outline'
-                        role='combobox'
-                        className={cn(
-                          'w-full justify-between',
-                          !field.value && 'text-muted-foreground'
-                        )}
+                <FormField
+                  control={form.control}
+                  name='source'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className='flex items-center text-sm font-medium'>
+                        <Newspaper className='w-4 h-4 mr-2' />
+                        Source
+                      </FormLabel>
+                      <Popover
+                        open={sourcePopoverOpen}
+                        onOpenChange={setSourcePopoverOpen}
                       >
-                        {field.value
-                          ? newsSources.find((src) => src.value === field.value)
-                              ?.label
-                          : 'Select Source'}
-                        <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
-                      </Button>
-                    </FormControl>
-                  </PopoverTrigger>
-                  <PopoverContent className='w-full p-0'>
-                    <Command>
-                      <CommandInput placeholder='Search source...' />
-                      <CommandList>
-                        <CommandEmpty>No source found.</CommandEmpty>
-                        <CommandGroup>
-                          {newsSources.map((src) => (
-                            <CommandItem
-                              value={src.label}
-                              key={src.value}
-                              onSelect={() => {
-                                setSourcePopoverOpen(false);
-                                form.setValue('source', src.value);
-                              }}
+                        <PopoverTrigger asChild>
+                          <FormControl>
+                            <Button
+                              variant='outline'
+                              role='combobox'
+                              className={cn(
+                                'w-full justify-between bg-background transition-all duration-300 focus:ring-2 focus:ring-primary',
+                                !field.value && 'text-muted-foreground'
+                              )}
                             >
-                              {src.label}
-                              <Check
-                                className={cn(
-                                  'ml-auto',
-                                  src.value === field.value
-                                    ? 'opacity-100'
-                                    : 'opacity-0'
-                                )}
-                              />
-                            </CommandItem>
-                          ))}
-                        </CommandGroup>
-                      </CommandList>
-                    </Command>
-                  </PopoverContent>
-                </Popover>
-              </FormItem>
-            )}
-          />
+                              {field.value
+                                ? newsSources.find(
+                                    (src) => src.value === field.value
+                                  )?.label
+                                : 'Select Source'}
+                              <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
+                            </Button>
+                          </FormControl>
+                        </PopoverTrigger>
+                        <PopoverContent className='w-full p-0'>
+                          <Command>
+                            <CommandInput placeholder='Search source...' />
+                            <CommandList>
+                              <CommandEmpty>No source found.</CommandEmpty>
+                              <CommandGroup>
+                                {newsSources.map((src) => (
+                                  <CommandItem
+                                    value={src.label}
+                                    key={src.value}
+                                    onSelect={() => {
+                                      setSourcePopoverOpen(false);
+                                      form.setValue('source', src.value);
+                                    }}
+                                  >
+                                    {src.label}
+                                    <Check
+                                      className={cn(
+                                        'ml-auto',
+                                        src.value === field.value
+                                          ? 'opacity-100'
+                                          : 'opacity-0'
+                                      )}
+                                    />
+                                  </CommandItem>
+                                ))}
+                              </CommandGroup>
+                            </CommandList>
+                          </Command>
+                        </PopoverContent>
+                      </Popover>
+                    </FormItem>
+                  )}
+                />
 
-          <FormField
-            control={form.control}
-            name='country'
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Country</FormLabel>
-
-                <Popover
-                  open={countryPopoverOpen}
-                  onOpenChange={setCountryPopoverOpen}
-                >
-                  <PopoverTrigger asChild>
-                    <FormControl>
-                      <Button
-                        variant='outline'
-                        role='combobox'
-                        className={cn(
-                          'w-full justify-between',
-                          !field.value && 'text-muted-foreground'
-                        )}
+                <FormField
+                  control={form.control}
+                  name='country'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className='flex items-center text-sm font-medium'>
+                        <Globe className='w-4 h-4 mr-2' />
+                        Country
+                      </FormLabel>
+                      <Popover
+                        open={countryPopoverOpen}
+                        onOpenChange={setCountryPopoverOpen}
                       >
-                        {field.value
-                          ? countries.find((src) => src.value === field.value)
-                              ?.label
-                          : 'Select Country'}
-                        <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
-                      </Button>
-                    </FormControl>
-                  </PopoverTrigger>
-                  <PopoverContent className='w-full p-0'>
-                    <Command>
-                      <CommandInput placeholder='Search country...' />
-                      <CommandList>
-                        <CommandEmpty>No country found.</CommandEmpty>
-                        <CommandGroup>
-                          {countries.map((src) => (
-                            <CommandItem
-                              value={src.label}
-                              key={src.value}
-                              onSelect={() => {
-                                setCountryPopoverOpen(false);
-                                form.setValue('country', src.value);
-                              }}
+                        <PopoverTrigger asChild>
+                          <FormControl>
+                            <Button
+                              variant='outline'
+                              role='combobox'
+                              className={cn(
+                                'w-full justify-between bg-background transition-all duration-300 focus:ring-2 focus:ring-primary',
+                                !field.value && 'text-muted-foreground'
+                              )}
                             >
-                              {src.label}
-                              <Check
-                                className={cn(
-                                  'ml-auto',
-                                  src.value === field.value
-                                    ? 'opacity-100'
-                                    : 'opacity-0'
-                                )}
-                              />
-                            </CommandItem>
-                          ))}
-                        </CommandGroup>
-                      </CommandList>
-                    </Command>
-                  </PopoverContent>
-                </Popover>
-              </FormItem>
-            )}
-          />
+                              {field.value
+                                ? countries.find(
+                                    (src) => src.value === field.value
+                                  )?.label
+                                : 'Select Country'}
+                              <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
+                            </Button>
+                          </FormControl>
+                        </PopoverTrigger>
+                        <PopoverContent className='w-full p-0'>
+                          <Command>
+                            <CommandInput placeholder='Search country...' />
+                            <CommandList>
+                              <CommandEmpty>No country found.</CommandEmpty>
+                              <CommandGroup>
+                                {countries.map((src) => (
+                                  <CommandItem
+                                    value={src.label}
+                                    key={src.value}
+                                    onSelect={() => {
+                                      setCountryPopoverOpen(false);
+                                      form.setValue('country', src.value);
+                                    }}
+                                  >
+                                    {src.label}
+                                    <Check
+                                      className={cn(
+                                        'ml-auto',
+                                        src.value === field.value
+                                          ? 'opacity-100'
+                                          : 'opacity-0'
+                                      )}
+                                    />
+                                  </CommandItem>
+                                ))}
+                              </CommandGroup>
+                            </CommandList>
+                          </Command>
+                        </PopoverContent>
+                      </Popover>
+                    </FormItem>
+                  )}
+                />
 
-          <FormField
-            control={form.control}
-            name='category'
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Category</FormLabel>
-
-                <Popover
-                  open={categoryPopoverOpen}
-                  onOpenChange={setCategoryPopoverOpen}
-                >
-                  <PopoverTrigger asChild>
-                    <FormControl>
-                      <Button
-                        variant='outline'
-                        role='combobox'
-                        className={cn(
-                          'w-full justify-between',
-                          !field.value && 'text-muted-foreground'
-                        )}
+                <FormField
+                  control={form.control}
+                  name='category'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className='flex items-center text-sm font-medium'>
+                        <List className='w-4 h-4 mr-2' />
+                        Category
+                      </FormLabel>
+                      <Popover
+                        open={categoryPopoverOpen}
+                        onOpenChange={setCategoryPopoverOpen}
                       >
-                        {field.value
-                          ? categories.find((src) => src.value === field.value)
-                              ?.label
-                          : 'Select Category'}
-                        <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
-                      </Button>
-                    </FormControl>
-                  </PopoverTrigger>
-                  <PopoverContent className='w-full p-0'>
-                    <Command>
-                      <CommandInput placeholder='Search Category...' />
-                      <CommandList>
-                        <CommandEmpty>No category found.</CommandEmpty>
-                        <CommandGroup>
-                          {categories.map((src) => (
-                            <CommandItem
-                              value={src.label}
-                              key={src.value}
-                              onSelect={() => {
-                                setCategoryPopoverOpen(false);
-                                form.setValue('category', src.value);
-                              }}
+                        <PopoverTrigger asChild>
+                          <FormControl>
+                            <Button
+                              variant='outline'
+                              role='combobox'
+                              className={cn(
+                                'w-full justify-between bg-background transition-all duration-300 focus:ring-2 focus:ring-primary',
+                                !field.value && 'text-muted-foreground'
+                              )}
                             >
-                              {src.label}
-                              <Check
-                                className={cn(
-                                  'ml-auto',
-                                  src.value === field.value
-                                    ? 'opacity-100'
-                                    : 'opacity-0'
-                                )}
-                              />
-                            </CommandItem>
-                          ))}
-                        </CommandGroup>
-                      </CommandList>
-                    </Command>
-                  </PopoverContent>
-                </Popover>
-              </FormItem>
-            )}
-          />
+                              {field.value
+                                ? categories.find(
+                                    (src) => src.value === field.value
+                                  )?.label
+                                : 'Select Category'}
+                              <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
+                            </Button>
+                          </FormControl>
+                        </PopoverTrigger>
+                        <PopoverContent className='w-full p-0'>
+                          <Command>
+                            <CommandInput placeholder='Search Category...' />
+                            <CommandList>
+                              <CommandEmpty>No category found.</CommandEmpty>
+                              <CommandGroup>
+                                {categories.map((src) => (
+                                  <CommandItem
+                                    value={src.label}
+                                    key={src.value}
+                                    onSelect={() => {
+                                      setCategoryPopoverOpen(false);
+                                      form.setValue('category', src.value);
+                                    }}
+                                  >
+                                    {src.label}
+                                    <Check
+                                      className={cn(
+                                        'ml-auto',
+                                        src.value === field.value
+                                          ? 'opacity-100'
+                                          : 'opacity-0'
+                                      )}
+                                    />
+                                  </CommandItem>
+                                ))}
+                              </CommandGroup>
+                            </CommandList>
+                          </Command>
+                        </PopoverContent>
+                      </Popover>
+                    </FormItem>
+                  )}
+                />
+              </div>
 
-          {/* <FormField
-            control={form.control}
-            name='category'
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Category</FormLabel>
-
-                <Popover
-                  open={categoryPopoverOpen}
-                  onOpenChange={setCategoryPopoverOpen}
-                >
-                  <PopoverTrigger asChild>
-                    <FormControl>
-                      <Button
-                        variant='outline'
-                        role='combobox'
-                        className={cn(
-                          'w-full justify-between',
-                          !field.value && 'text-muted-foreground'
-                        )}
-                      >
-                        {field.value
-                          ? categories.find((src) => src.value === field.value)
-                              ?.label
-                          : 'Select Category'}
-                        <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
-                      </Button>
-                    </FormControl>
-                  </PopoverTrigger>
-                  <PopoverContent className='w-full p-0'>
-                    <Command>
-                      <CommandInput placeholder='Search category...' />
-                      <CommandList>
-                        <CommandEmpty>No category found.</CommandEmpty>
-                        <CommandGroup>
-                          {categories.map((src) => (
-                            <CommandItem
-                              value={src.label}
-                              key={src.value}
-                              onSelect={() => {
-                                setCategoryPopoverOpen(false);
-                                form.setValue('category', src.value);
-                              }}
-                            >
-                              {src.label}
-                              <Check
-                                className={cn(
-                                  'ml-auto',
-                                  src.value === field.value
-                                    ? 'opacity-100'
-                                    : 'opacity-0'
-                                )}
-                              />
-                            </CommandItem>
-                          ))}
-                        </CommandGroup>
-                      </CommandList>
-                    </Command>
-                  </PopoverContent>
-                </Popover>
-              </FormItem>
-            )}
-          /> */}
-        </div>
-
-        <Button
-          type='submit'
-          variant='submitBtn'
-          className=' w-full transition-all duration-300 lg:w-[calc(33.33%-20px)] lg:ml-auto lg:block'
-        >
-          Submit
-        </Button>
-      </form>
-    </Form>
+              <Button
+                type='submit'
+                className='md:ml-auto block w-full md:w-auto md:px-8 transition-all duration-300 text-primary-foreground font-semibold py-2 rounded-md shadow-md hover:shadow-lg transform hover:-translate-y-1'
+                effect='shineHover'
+              >
+                Search News
+              </Button>
+            </form>
+          </Form>
+        </CardContent>
+      </Card>
+    </motion.div>
   );
 };
 

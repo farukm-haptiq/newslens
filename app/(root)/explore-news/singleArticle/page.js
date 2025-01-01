@@ -27,7 +27,7 @@ const SingleArticlePage = async ({ searchParams }) => {
 
   if (!summary) {
     return (
-      <div className='space-y-3 p-5 '>
+      <div className='space-y-3'>
         <h1 className='text-5xl '>Fail to get summary of your article...</h1>
         <BackBtn />
       </div>
@@ -35,7 +35,7 @@ const SingleArticlePage = async ({ searchParams }) => {
   }
 
   return (
-    <div className='container mx-auto py-8 space-y-6 p-5 text-justify'>
+    <div className='space-y-6 text-justify'>
       <BackBtn />
       <Separator />
 

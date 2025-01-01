@@ -43,7 +43,7 @@ const ArticleWrapper = ({
   }, [currentPage, totalPages]);
 
   return (
-    <>
+    <div className='space-y-10'>
       <ExploreNewsForm
         initialSearch={searchQuery}
         initialSource={source}
@@ -71,7 +71,7 @@ const ArticleWrapper = ({
           totalPages={totalPages}
         />
       )}
-    </>
+    </div>
   );
 };
 

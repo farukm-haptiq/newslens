@@ -239,7 +239,9 @@ export function AppSidebar({ ...props }) {
           </Link>
         ) : (
           <div className='relative w-8 h-8 rounded-md overflow-hidden'>
-            <Image fill src={logo} alt='logo-img' className=' object-cover' />
+            <Link href={'/'}>
+              <Image fill src={logo} alt='logo-img' className=' object-cover' />
+            </Link>
           </div>
         )}
       </SidebarHeader>

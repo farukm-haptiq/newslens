@@ -6,7 +6,13 @@ import qs from 'query-string';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { Check, ChevronsUpDown } from 'lucide-react';
+import {
+  Check,
+  ChevronsUpDown,
+  Search,
+  SortAsc,
+  Newspaper,
+} from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -39,6 +45,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { motion } from 'framer-motion';
+import { Card, CardContent } from '@/components/ui/card';
 
 const FormSchema = z.object({
   search: z.string(),
@@ -56,7 +64,6 @@ const ExploreNewsForm = ({
 }) => {
   const router = useRouter();
   const [isMounted, setIsMounted] = useState(false);
-
   const [popoverOpen, setPopoverOpen] = useState(false);
 
   const form = useForm({
@@ -87,127 +94,169 @@ const ExploreNewsForm = ({
   if (!isMounted) return null;
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-6'>
-        <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-5'>
-          <FormField
-            control={form.control}
-            name='search'
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Search</FormLabel>
-                <FormControl>
-                  <Input type='search' placeholder='Search...' {...field} />
-                </FormControl>
-              </FormItem>
-            )}
-          />
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className='bg-card p-6 rounded-lg shadow-lg space-y-6'
+    >
+      <h2 className='text-3xl font-bold mb-6 text-center gradient-text'>
+        Explore News
+      </h2>
 
-          <FormField
-            control={form.control}
-            name='source'
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Source</FormLabel>
+      <Card>
+        <CardContent className='p-6'>
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-6'>
+              <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-6'>
+                <FormField
+                  control={form.control}
+                  name='search'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className='flex items-center text-sm font-medium'>
+                        <Search className='w-4 h-4 mr-2' />
+                        Search
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          type='search'
+                          placeholder='Search...'
+                          {...field}
+                          className='bg-background transition-all duration-300 focus:ring-2 focus:ring-primary'
+                        />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
 
-                <Popover open={popoverOpen} onOpenChange={setPopoverOpen}>
-                  <PopoverTrigger asChild>
-                    <FormControl>
-                      <Button
-                        variant='outline'
-                        role='combobox'
-                        className={cn(
-                          'w-full justify-between',
-                          !field.value && 'text-muted-foreground'
-                        )}
-                      >
-                        {field.value
-                          ? newsSources.find((src) => src.value === field.value)
-                              ?.label
-                          : 'Select Source'}
-                        <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
-                      </Button>
-                    </FormControl>
-                  </PopoverTrigger>
-                  <PopoverContent className='w-full p-0'>
-                    <Command>
-                      <CommandInput placeholder='Search source...' />
-                      <CommandList>
-                        <CommandEmpty>No source found.</CommandEmpty>
-                        <CommandGroup>
-                          {newsSources.map((src) => (
-                            <CommandItem
-                              value={src.label}
-                              key={src.value}
-                              onSelect={() => {
-                                setPopoverOpen(false);
-                                form.setValue('source', src.value);
-                              }}
+                <FormField
+                  control={form.control}
+                  name='source'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className='flex items-center text-sm font-medium'>
+                        <Newspaper className='w-4 h-4 mr-2' />
+                        Source
+                      </FormLabel>
+
+                      <Popover open={popoverOpen} onOpenChange={setPopoverOpen}>
+                        <PopoverTrigger asChild>
+                          <FormControl>
+                            <Button
+                              variant='outline'
+                              role='combobox'
+                              className={cn(
+                                'w-full justify-between bg-background transition-all duration-300 focus:ring-2 focus:ring-primary',
+                                !field.value && 'text-muted-foreground'
+                              )}
                             >
-                              {src.label}
-                              <Check
-                                className={cn(
-                                  'ml-auto',
-                                  src.value === field.value
-                                    ? 'opacity-100'
-                                    : 'opacity-0'
-                                )}
-                              />
-                            </CommandItem>
-                          ))}
-                        </CommandGroup>
-                      </CommandList>
-                    </Command>
-                  </PopoverContent>
-                </Popover>
-              </FormItem>
-            )}
-          />
+                              {field.value
+                                ? newsSources.find(
+                                    (src) => src.value === field.value
+                                  )?.label
+                                : 'Select Source'}
+                              <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
+                            </Button>
+                          </FormControl>
+                        </PopoverTrigger>
+                        <PopoverContent className='w-full p-0'>
+                          <Command>
+                            <CommandInput placeholder='Search source...' />
+                            <CommandList>
+                              <CommandEmpty>No source found.</CommandEmpty>
+                              <CommandGroup>
+                                {newsSources.map((src) => (
+                                  <CommandItem
+                                    value={src.label}
+                                    key={src.value}
+                                    onSelect={() => {
+                                      setPopoverOpen(false);
+                                      form.setValue('source', src.value);
+                                    }}
+                                  >
+                                    {src.label}
+                                    <Check
+                                      className={cn(
+                                        'ml-auto',
+                                        src.value === field.value
+                                          ? 'opacity-100'
+                                          : 'opacity-0'
+                                      )}
+                                    />
+                                  </CommandItem>
+                                ))}
+                              </CommandGroup>
+                            </CommandList>
+                          </Command>
+                        </PopoverContent>
+                      </Popover>
+                    </FormItem>
+                  )}
+                />
 
-          <FormField
-            control={form.control}
-            name='sortBy'
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Sort By</FormLabel>
+                <FormField
+                  control={form.control}
+                  name='sortBy'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className='flex items-center text-sm font-medium'>
+                        <SortAsc className='w-4 h-4 mr-2' />
+                        Sort By
+                      </FormLabel>
 
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                >
-                  <FormControl>
-                    <SelectTrigger
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
+                        {/* <Button
+                      variant='outline'
                       className={cn(
-                        'capitalize focus:ring-0 ring-offset-0 focus:ring-offset-0 outline-none  hover:bg-accent ',
+                        'w-full justify-between bg-background transition-all duration-300 focus:ring-2 focus:ring-primary',
                         !field.value && 'text-muted-foreground'
                       )}
-                    >
-                      <SelectValue placeholder='Select a sort option' />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    <SelectGroup>
-                      <SelectLabel>Sort By</SelectLabel>
-                      <SelectItem value='relevancy'>Relevancy</SelectItem>
-                      <SelectItem value='popularity'>Popularity</SelectItem>
-                      <SelectItem value='publishedAt'>Published At</SelectItem>
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-              </FormItem>
-            )}
-          />
-        </div>
+                    > */}
+                        <FormControl>
+                          <SelectTrigger
+                            className={cn(
+                              'capitalize bg-background transition-all duration-300 focus:ring-0 ring-offset-0 focus:ring-offset-0 outline-none  hover:bg-accent ',
+                              !field.value && 'text-muted-foreground'
+                            )}
+                          >
+                            <SelectValue placeholder='Select a sort option' />
+                          </SelectTrigger>
+                        </FormControl>
+                        {/* </Button> */}
+                        <SelectContent>
+                          <SelectGroup>
+                            <SelectLabel>Sort By</SelectLabel>
+                            <SelectItem value='relevancy'>Relevancy</SelectItem>
+                            <SelectItem value='popularity'>
+                              Popularity
+                            </SelectItem>
+                            <SelectItem value='publishedAt'>
+                              Published At
+                            </SelectItem>
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
+                    </FormItem>
+                  )}
+                />
+              </div>
 
-        <Button
-          type='submit'
-          variant='submitBtn'
-          className=' w-full transition-all duration-300 lg:w-[calc(33.33%-20px)] lg:ml-auto lg:block'
-        >
-          Submit
-        </Button>
-      </form>
-    </Form>
+              <Button
+                type='submit'
+                className='md:ml-auto block w-full md:w-auto md:px-8 transition-all duration-300 text-primary-foreground font-semibold py-2 rounded-md shadow-md hover:shadow-lg transform hover:-translate-y-1'
+                effect='shineHover'
+              >
+                Explore News
+              </Button>
+            </form>
+          </Form>
+        </CardContent>
+      </Card>
+    </motion.div>
   );
 };
 

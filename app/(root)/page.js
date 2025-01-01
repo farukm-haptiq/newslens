@@ -1,11 +1,12 @@
 'use client';
 
+import { motion } from 'framer-motion';
+
 import {
   ArrowRight,
   FilePlus2,
   FileScanIcon,
   Link,
-  NewspaperIcon,
   Search,
 } from 'lucide-react';
 import { Card } from '@/components/ui/card';
@@ -49,31 +50,9 @@ const tools = [
 const DashBoardPage = () => {
   const router = useRouter();
 
-  // return (
-  //   <div className='relative flex h-[200px] w-[300px] flex-col items-center justify-center rounded-md bg-zinc-200 px-5 py-2 dark:bg-zinc-800'>
-  //     <BorderTrail
-  //       style={{
-  //         boxShadow:
-  //           '0px 0px 60px 30px rgb(255 255 255 / 50%), 0 0 100px 60px rgb(0 0 0 / 50%), 0 0 140px 90px rgb(0 0 0 / 50%)',
-  //       }}
-  //       size={100}
-  //     />
-  //     <div
-  //       className='flex h-full animate-pulse flex-col items-start justify-center space-y-2'
-  //       role='status'
-  //       aria-label='Loading...'
-  //     >
-  //       <div className='h-1 w-4 rounded-[4px] bg-zinc-600'></div>
-  //       <div className='h-1 w-10 rounded-[4px] bg-zinc-600'></div>
-  //       <div className='h-1 w-12 rounded-[4px] bg-zinc-600'></div>
-  //       <div className='h-1 w-12 rounded-[4px] bg-zinc-600'></div>
-  //       <div className='h-1 w-12 rounded-[4px] bg-zinc-600'></div>
-  //     </div>
-  //   </div>
-  // );
   return (
-    <div>
-      <div className='mb-8 space-y-4'>
+    <div className='space-y-10'>
+      <div className='space-y-5'>
         <h2 className='text-2xl md:text-4xl font-bold text-center'>
           <TextShimmer duration={1.2}>Explore the power of AI</TextShimmer>
         </h2>
@@ -81,7 +60,6 @@ const DashBoardPage = () => {
           A sharper perspective on the news - Experience the power of AI
         </p>
       </div>
-
       <div className='px-4 md:px-20 lg:px-32 space-y-4'>
         {tools.map((tool, index) => {
           return (
@@ -97,12 +75,17 @@ const DashBoardPage = () => {
                 }}
                 size={100}
               />
-              <div className='flex items-center gap-x-4'>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                className='flex items-center gap-x-4'
+              >
                 <div className={cn('p-2 w-fit rounded-md', tool.bgColor)}>
                   <tool.icon className={cn('w-8 h-8', tool.color)} />
                 </div>
                 <div className='font-semibold'>{tool.label}</div>
-              </div>
+              </motion.div>
               <ArrowRight className='w-5 h-5' />
             </Card>
           );

@@ -10,11 +10,9 @@ import RelatedArticles from './RelatedArticles';
 const NewsSearchContainer = async ({ articles, nextPage, searchQuery }) => {
   if (!articles || articles.length <= 0) {
     return (
-      <div className='space-y-2 p-6'>
-        <h1 className='text-2xl '>
-          No Search Articles found with your search query...
-        </h1>
-      </div>
+      <h1 className='text-5xl text-slate-800 text-center'>
+        Oops! no result match your query.
+      </h1>
     );
   }
 
@@ -23,20 +21,22 @@ const NewsSearchContainer = async ({ articles, nextPage, searchQuery }) => {
   const summary = await getNewsSearchArticlesSummary(articlesContent);
 
   return (
-    <>
-      <h2 className='text-2xl font-semibold mb-4'>Articles</h2>
-      {articles.map((article, index) => {
-        return <SingleNewsSearchArticleCard key={index} article={article} />;
-      })}
+    <div className='space-y-10'>
+      <div className='space-y-4'>
+        <h2 className='text-2xl font-semibold'>Articles</h2>
+        {articles.map((article, index) => {
+          return <SingleNewsSearchArticleCard key={index} article={article} />;
+        })}
 
-      {summary ? (
-        <NewsSearchSummary {...summary} />
-      ) : (
-        <h1 className='text-2xl '>Fail to get summary of your articles...</h1>
-      )}
+        {summary ? (
+          <NewsSearchSummary {...summary} />
+        ) : (
+          <h1 className='text-2xl '>Fail to get summary of your articles...</h1>
+        )}
+      </div>
 
       <RelatedArticles searchQuery={searchQuery} nextPage={nextPage} />
-    </>
+    </div>
   );
 };
 
