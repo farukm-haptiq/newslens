@@ -36,7 +36,7 @@ const SingleRelatedNewsCard = ({
           <div className='flex items-center space-x-2'>
             <ArticleSourceIconContainer
               className={'size-6'}
-              icon={source_icon}
+              icon={source_icon || defaultImage}
               alt={source_name}
             />
             <CardDescription>{source_name}</CardDescription>
