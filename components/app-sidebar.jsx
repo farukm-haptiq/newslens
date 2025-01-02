@@ -225,7 +225,7 @@ export function AppSidebar({ ...props }) {
         {/* <TeamSwitcher teams={data.teams} /> */}
         {isOpen ? (
           <Link href='/' className='flex justify-center items-center my-5'>
-            <div className='relative size-12 rounded-md overflow-hidden'>
+            <div className='relative w-12 h-12 rounded-md overflow-hidden'>
               <Image
                 fill
                 src={logo2}
